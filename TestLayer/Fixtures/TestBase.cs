@@ -32,7 +32,7 @@ namespace TestLayer.Fixtures
                 try
                 {
                     var path = ScreenshotHelper.SaveScreenshot(DriverManager.Instance.Driver, testName);
-                    Log.Error(ex, "Test {TestName} failed, screenshot saved to {Screenshot}", testName, path);
+                    Log.Error(ex, $"Test {testName} failed, screenshot saved to {path}");
                     if (!string.IsNullOrEmpty(path)) Output.WriteLine($"Screenshot: {path}");
                 }
                 catch (Exception inner)

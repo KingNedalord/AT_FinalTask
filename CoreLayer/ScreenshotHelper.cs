@@ -14,7 +14,7 @@ namespace CoreLayer
                 var screenshotDriver = driver as ITakesScreenshot;
                 if (screenshotDriver == null) return string.Empty;
 
-                // Place screenshots in ./screenshots relative to test run folder
+                // Place screenshots in ./screenshots relative to test run folder(bin/debug/...)
                 var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "screenshots");
                 Directory.CreateDirectory(dir);
                 var timestamp = DateTime.UtcNow.ToString("yyyyMMdd_HHmmssfff");
