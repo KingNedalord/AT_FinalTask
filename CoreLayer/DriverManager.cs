@@ -25,33 +25,33 @@ namespace CoreLayer
 
         public IWebDriver Driver => threadDriver.IsValueCreated ? threadDriver.Value : null;
 
-        public void CreateDriver(string browser = null)
+        public void CreateDriver(string browser)
         {
             if (threadDriver.IsValueCreated && threadDriver.Value != null)
-                return; // already created for this thread
+                return;
 
             var selected = (browser ?? Environment.GetEnvironmentVariable("BROWSER") ?? "Chrome").ToLowerInvariant();
-            var headless = (Environment.GetEnvironmentVariable("HEADLESS") ?? "false").ToLowerInvariant() == "true";
+            // var headless = (Environment.GetEnvironmentVariable("HEADLESS") ?? "false").ToLowerInvariant() == "true";
 
             IWebDriver driver;
             if (selected.Contains("firefox"))
             {
                 var options = new FirefoxOptions();
-                if (headless)
-                    options.AddArgument("-headless");
+                // if (headless)
+                //     options.AddArgument("-headless");
                 driver = new FirefoxDriver(options);
             }
             else
             {
                 var options = new ChromeOptions();
-                if (headless)
-                    options.AddArgument("--headless=new");
+                // if (headless)
+                //     options.AddArgument("--headless=new");
                 // maximize windows to reduce locator issues
                 options.AddArgument("--start-maximized");
                 driver = new ChromeDriver(options);
             }
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             threadDriver.Value = driver;
         }
 
@@ -64,10 +64,15 @@ namespace CoreLayer
                     threadDriver.Value.Quit();
                     threadDriver.Value.Dispose();
                 }
-                catch { /* swallow exceptions during cleanup */ }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
                 finally
                 {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     threadDriver.Value = null;
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                 }
             }
         }
