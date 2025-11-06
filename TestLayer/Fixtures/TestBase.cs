@@ -1,5 +1,4 @@
-﻿using System;
-using CoreLayer;
+﻿using CoreLayer;
 using Serilog;
 using Xunit.Abstractions;
 
@@ -14,11 +13,12 @@ namespace TestLayer.Fixtures
     {
         protected readonly ITestOutputHelper Output;
 
-        protected TestBase(ITestOutputHelper output)
+        protected TestBase(ITestOutputHelper output, string browser = "Chrome")
         {
             Output = output;
             SerilogConfig.Configure();
-            DriverManager.Instance.CreateDriver();
+            DriverManager.Instance.CreateDriver(browser);
+            // Thread.Sleep(5000);
         }
 
         protected void ExecuteTest(Action testAction, string testName)

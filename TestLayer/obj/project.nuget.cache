@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "oL13iJ6E3Fc=",
+  "dgSpecHash": "xsGanmMcDVw=",
   "success": true,
   "projectFilePath": "C:\\Users\\alocomputers\\AT_FinalTask\\TestLayer\\TestLayer.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\alocomputers\\.nuget\\packages\\fluentassertions\\8.8.0\\fluentassertions.8.8.0.nupkg.sha512",
     "C:\\Users\\alocomputers\\.nuget\\packages\\microsoft.codecoverage\\18.0.0\\microsoft.codecoverage.18.0.0.nupkg.sha512",
     "C:\\Users\\alocomputers\\.nuget\\packages\\microsoft.net.test.sdk\\18.0.0\\microsoft.net.test.sdk.18.0.0.nupkg.sha512",
     "C:\\Users\\alocomputers\\.nuget\\packages\\microsoft.testplatform.objectmodel\\18.0.0\\microsoft.testplatform.objectmodel.18.0.0.nupkg.sha512",

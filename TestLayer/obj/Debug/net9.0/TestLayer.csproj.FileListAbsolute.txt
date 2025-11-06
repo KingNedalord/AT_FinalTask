@@ -110,3 +110,4 @@ C:\Users\alocomputers\AT_FinalTask\TestLayer\obj\Debug\net9.0\refint\TestLayer.d
 C:\Users\alocomputers\AT_FinalTask\TestLayer\obj\Debug\net9.0\TestLayer.pdb
 C:\Users\alocomputers\AT_FinalTask\TestLayer\obj\Debug\net9.0\TestLayer.genruntimeconfig.cache
 C:\Users\alocomputers\AT_FinalTask\TestLayer\obj\Debug\net9.0\ref\TestLayer.dll
+C:\Users\alocomputers\AT_FinalTask\TestLayer\bin\Debug\net9.0\FluentAssertions.dll

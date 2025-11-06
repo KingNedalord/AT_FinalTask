@@ -4,16 +4,17 @@ using OpenQA.Selenium;
 using TestLayer.TestData;
 using Xunit;
 using Xunit.Abstractions;
-
+using FluentAssertions;
 namespace TestLayer.Tests
 {
-    public class LoginTests : TestLayer.Fixtures.TestBase
+    public class LoginTests : Fixtures.TestBase
     {
-        public LoginTests(ITestOutputHelper output) : base(output)
+        public LoginTests(ITestOutputHelper output) : base(output, "firefox") // if we don't specify chrome by default
         {
+            // DriverManager.Instance.CreateDriver("Chrome");
         }
 
-        private IWebDriver Driver => DriverManager.Instance.Driver;
+        private static IWebDriver Driver => DriverManager.Instance.Driver;
 
         [Fact(DisplayName = "UC-1: Login with empty credentials shows Username is required")]
         public void UC1_Login_EmptyCredentials_ShowsUsernameRequired()
@@ -29,9 +30,12 @@ namespace TestLayer.Tests
                 login.ClearPassword();
 
                 login.ClickLogin();
-
+                // Thread.Sleep(5000);
                 var err = login.GetErrorMessage();
-                Assert.Contains("Epic sadface: Username is required", err);
+
+                // Assert.Contains("", err);
+
+                err.Should().Contain("Epic sadface: Username is required");
             }, nameof(UC1_Login_EmptyCredentials_ShowsUsernameRequired));
         }
 
@@ -50,12 +54,14 @@ namespace TestLayer.Tests
                 login.ClickLogin();
 
                 var err = login.GetErrorMessage();
-                Assert.Contains("Epic sadface: Password is required", err);
+                // Assert.Contains("", err);
+                err.Should().Contain("Epic sadface: Password is required");
+
             }, nameof(UC2_Login_MissingPassword_ShowsPasswordRequired));
         }
 
         [Theory(DisplayName = "UC-3: Login accepted users succeed")]
-        [MemberData(nameof(TestLayer.TestData.AcceptedUsersData.GetAcceptedUsers), MemberType = typeof(AcceptedUsersData))]
+        [MemberData(nameof(AcceptedUsersData.GetAcceptedUsers), MemberType = typeof(AcceptedUsersData))]
         public void UC3_Login_AcceptedUsers_Success(string username)
         {
             ExecuteTest(() =>
@@ -70,7 +76,9 @@ namespace TestLayer.Tests
                 var inventory = new InventoryPage(Driver);
                 var title = inventory.GetPageTitle();
 
-                Assert.Contains("Swag Labs", title);
+                // Assert.Contains("", title);
+                title.Should().Contain("Swag Labs");
+
             }, $"UC3_Login_AcceptedUsers_Success_{username}");
         }
     }
