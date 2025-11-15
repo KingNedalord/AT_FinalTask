@@ -21,9 +21,8 @@ User stories (UC)
 Quick start
 1. Restore packages: `dotnet restore` (Selenium, FluentAssertions, Serilog)
 2. Choose browser: set environment variable `BROWSER` to `Chrome` or `Firefox`. Default: Chrome.
-3. To run headless set `HEADLESS=true`. By default tests run headed.
-4. Run tests: `dotnet test --logger "trx"`
-5. Logs:
+3. Run tests: `dotnet test`
+4. Logs:
    - Console: visible during test run
    - Log file: `./logs/test-log-.log` (rolling daily, keep 2 days)
    - Screenshots on failure: saved to `./screenshots`
@@ -44,6 +43,5 @@ Project layout
 
 Notes
 - All locators use XPath stored in Page Objects.
-- Tests use FluentAssertions for readable assertions.
 - Screenshots are captured on test failure and saved in `./screenshots` (not embedded in output).
 ```
