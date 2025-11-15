@@ -1,11 +1,10 @@
 ```markdown
-# TestAutomationFrameworkPractice — README
+# AT Final task — README
 
 Task: Automate login scenarios for https://www.saucedemo.com/ using Selenium WebDriver and xUnit.
 
 Supported features (implemented)
 - Browsers: Chrome and Firefox (select via environment variable BROWSER) — default: Chrome
-- Headless: only when HEADLESS=true
 - Locators: XPath
 - Test runner: xUnit
 - Assertions: FluentAssertions
