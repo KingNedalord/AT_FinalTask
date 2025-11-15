@@ -34,7 +34,10 @@ namespace TestLayer.Tests
                 var err = login.GetErrorMessage();
 
                 // Assert.Contains("", err);
-
+                //Your deadline is November 17th. You must submit your task, wait for 
+                // the review, and schedule a defense session (during which you will present and
+                //  discuss your completed task with your reviewer). AFTER THAT, if your defense is
+                //  successful, we will schedule a general and technical pre-lab interview for you.
                 err.Should().Contain("Epic sadface: Username is required");
             }, nameof(UC1_Login_EmptyCredentials_ShowsUsernameRequired));
         }
