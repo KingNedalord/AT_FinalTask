@@ -7,10 +7,17 @@ namespace BusinessLayer.Pages
         private readonly IWebDriver _driver;
         private const string BaseUrl = "https://www.saucedemo.com/";
 
+        // this approach 54 seconds
         public LoginPage(IWebDriver driver)
         {
             _driver = driver;
         }
+        // this approach 39 seconds
+        // public LoginPage(string browser = "Chrome")
+        // {
+        //     DriverManager.Instance.CreateDriver(browser);
+        //     _driver = DriverManager.Instance.Driver;
+        // }
 
         // XPath locators
         private By UsernameInput => By.XPath("//input[@id='user-name']");
@@ -43,9 +50,6 @@ namespace BusinessLayer.Pages
             usernameField.SendKeys(Keys.Control + "a");
             usernameField.SendKeys(Keys.Delete);
             usernameField.Clear();
-
-            // var js = (IJavaScriptExecutor)_driver;
-            // js.ExecuteScript("arguments[0].value = '';", usernameField);
         }
 
         public void ClearPassword()
@@ -55,9 +59,6 @@ namespace BusinessLayer.Pages
             passwordField.SendKeys(Keys.Control + "a");
             passwordField.SendKeys(Keys.Delete);
             passwordField.Clear();
-
-            // var js = (IJavaScriptExecutor)_driver;
-            // js.ExecuteScript("arguments[0].value = '';", passwordField);
         }
 
         public void ClickLogin() => _driver.FindElement(LoginButton).Click();

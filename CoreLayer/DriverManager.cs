@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 
@@ -11,7 +9,6 @@ namespace CoreLayer
     /// Each test thread gets its own IWebDriver instance stored in a ThreadLocal.
     /// Initialize the driver with DriverManager.Instance.CreateDriver(); 
     /// Quit with DriverManager.Instance.QuitDriver();
-    /// Default browser is Chrome. Headless only when HEADLESS=true.
     /// </summary>
     public sealed class DriverManager
     {
@@ -23,36 +20,31 @@ namespace CoreLayer
 
         private DriverManager() { }
 
-        public IWebDriver Driver => threadDriver.IsValueCreated ? threadDriver.Value : null;
+        public IWebDriver Driver => threadDriver.Value ?? throw new InvalidOperationException(
+            "WebDriver not initialized. Call DriverManager.Instance.CreateDriver(browser) before accessing Driver.");
 
         public void CreateDriver(string browser)
         {
             if (threadDriver.IsValueCreated && threadDriver.Value != null)
                 return;
 
-            var selected = (browser ?? Environment.GetEnvironmentVariable("BROWSER") ?? "Chrome").ToLowerInvariant();
-            // var headless = (Environment.GetEnvironmentVariable("HEADLESS") ?? "false").ToLowerInvariant() == "true";
+            // var selected = (browser ?? Environment.GetEnvironmentVariable("BROWSER") ?? "Chrome").ToLowerInvariant();
 
+            var selected = browser.ToLowerInvariant();
             IWebDriver driver;
             if (selected.Contains("firefox"))
             {
-                var options = new FirefoxOptions();
-                // if (headless)
-                //     options.AddArgument("-headless");
-                driver = new FirefoxDriver(options);
+                driver = new FirefoxDriver();
             }
             else
             {
-                var options = new ChromeOptions();
-                // if (headless)
-                //     options.AddArgument("--headless=new");
-                // maximize windows to reduce locator issues
-                options.AddArgument("--start-maximized");
-                driver = new ChromeDriver(options);
+                driver = new ChromeDriver();
             }
 
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             threadDriver.Value = driver;
+            // maximize windows to reduce locator issues
+            driver.Manage().Window.Maximize();
         }
 
         public void QuitDriver()
@@ -70,9 +62,8 @@ namespace CoreLayer
                 }
                 finally
                 {
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-                    threadDriver.Value = null;
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+                    //The ! after null - tells the compiler "I know this looks like it could be null, but trust me, it's safe"
+                    threadDriver.Value = null!;
                 }
             }
         }

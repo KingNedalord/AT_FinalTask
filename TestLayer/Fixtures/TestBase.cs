@@ -17,8 +17,9 @@ namespace TestLayer.Fixtures
         {
             Output = output;
             SerilogConfig.Configure();
+            // With this line  - 54 seconds. 
+            // Comment next line - 39 seconds.
             DriverManager.Instance.CreateDriver(browser);
-            // Thread.Sleep(5000);
         }
 
         protected void ExecuteTest(Action testAction, string testName)
