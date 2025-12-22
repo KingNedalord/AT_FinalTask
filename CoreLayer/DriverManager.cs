@@ -28,8 +28,6 @@ namespace CoreLayer
             if (threadDriver.IsValueCreated && threadDriver.Value != null)
                 return;
 
-            // var selected = (browser ?? Environment.GetEnvironmentVariable("BROWSER") ?? "Chrome").ToLowerInvariant();
-
             var selected = browser.ToLowerInvariant();
             IWebDriver driver;
             if (selected.Contains("firefox"))
@@ -62,7 +60,6 @@ namespace CoreLayer
                 }
                 finally
                 {
-                    //The ! after null - tells the compiler "I know this looks like it could be null, but trust me, it's safe"
                     threadDriver.Value = null!;
                 }
             }

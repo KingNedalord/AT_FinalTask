@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Pages;
 using CoreLayer;
-using OpenQA.Selenium;
 using TestLayer.TestData;
 using Xunit;
 using Xunit.Abstractions;
@@ -9,27 +8,16 @@ namespace TestLayer.Tests
 {
     public class LoginTests : Fixtures.TestBase
     {
-        //  xUnit creates a new test class instance per test, so each test creates and then quits its driver. It means taht it creates 
-        //new Driver in every test
         public LoginTests(ITestOutputHelper output) : base(output, "firefox")
         {
-            // DriverManager.Instance.CreateDriver("Chrome");
         }
-
-        // public LoginTests(ITestOutputHelper output) : base(output)
-        // {
-
-        // }
-
-        private IWebDriver Driver => DriverManager.Instance.Driver;
 
         [Fact(DisplayName = "UC-1: Login with empty credentials shows Username is required")]
         public void UC1_Login_EmptyCredentials_ShowsUsernameRequired()
         {
             ExecuteTest(() =>
             {
-                // var login = new LoginPage(Driver);
-                var login = new LoginPage(Driver);
+                var login = new LoginPage(DriverManager.Instance.Driver);
                 login.GoTo();
 
                 login.EnterUsername("foo");
@@ -38,7 +26,6 @@ namespace TestLayer.Tests
                 login.ClearPassword();
 
                 login.ClickLogin();
-                // Thread.Sleep(5000);
                 var err = login.GetErrorMessage();
                 err.Should().Contain("Epic sadface: Username is required");
             }, nameof(UC1_Login_EmptyCredentials_ShowsUsernameRequired));
@@ -49,8 +36,7 @@ namespace TestLayer.Tests
         {
             ExecuteTest(() =>
             {
-                // var login = new LoginPage(Driver);
-                var login = new LoginPage(Driver);
+                var login = new LoginPage(DriverManager.Instance.Driver);
                 login.GoTo();
 
                 login.EnterUsername("some_user");
@@ -71,17 +57,15 @@ namespace TestLayer.Tests
         {
             ExecuteTest(() =>
             {
-                // var login = new LoginPage(Driver);
-                var login = new LoginPage(Driver);
+                var login = new LoginPage(DriverManager.Instance.Driver);
                 login.GoTo();
 
                 login.EnterUsername(username);
                 login.EnterPassword("secret_sauce");
                 login.ClickLogin();
 
-                // var inventory = new InventoryPage(Driver);
 
-                var inventory = new InventoryPage(Driver);
+                var inventory = new InventoryPage(DriverManager.Instance.Driver);
                 var title = inventory.GetPageTitle();
 
                 title.Should().Contain("Swag Labs");

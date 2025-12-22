@@ -17,8 +17,6 @@ namespace TestLayer.Fixtures
         {
             Output = output;
             SerilogConfig.Configure();
-            // With this line  - 54 seconds. 
-            // Comment next line - 39 seconds.
             DriverManager.Instance.CreateDriver(browser);
         }
 

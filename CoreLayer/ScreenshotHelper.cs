@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
 namespace CoreLayer
 {
